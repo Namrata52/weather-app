@@ -116,13 +116,6 @@ h1 {
     display: flex;
 
 }
-.user-infoContainer.error{
-    background-image: url(./assets/not-found.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    z-index: 4;
-    
-}
 
 
 .name {
@@ -239,6 +232,21 @@ h1 {
     height: 40px;
 }
 
+.error{
+    display: none;
+}
+
+.error.active{
+  opacity: 1;
+  display: flex;
+}
+
+.error p{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 20px;
+    
+}
 @media only screen and (max-width:768px) and (min-width:572px){
     .tab-container {
         margin-top: 1.75rem;
