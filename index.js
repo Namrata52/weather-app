@@ -22,6 +22,8 @@ const options = {
 };
 getFromSessionStorage();
 
+const errorDisplay =document.querySelector('[data-error]');
+errorDisplay.classList.remove("active");
 
 function switchTab(clickedTab){
     if(clickedTab!=oldTab){
@@ -37,6 +39,7 @@ function switchTab(clickedTab){
             // ami pehle search tab me tha, ab your weather pe jana hai
             searchForm.classList.remove("active");
             userInfoContainer.classList.remove("active");
+            errorDisplay.classList.remove("active");
             getFromSessionStorage();
             //to check loacl storage
         }
@@ -66,7 +69,6 @@ function getFromSessionStorage(){
         //api call krenege for local coordinates
         const coordinates =JSON.parse(localCoordinates);
         fetchUserWeatherInfo(coordinates);
-
     }
 }
 
@@ -87,6 +89,9 @@ async function fetchUserWeatherInfo(coordinates){
         loadingScreen.classList.remove("active");
         userInfoContainer.classList.add("active");
         renderWeatherInfo(data);
+        if(response.status!==200){
+            throw new Error(response.status);
+          }
     }catch(err){
         console.log("error");
 
@@ -167,23 +172,27 @@ async function fetchSearchWeatherInfo(city){
         loadingScreen.classList.remove("active");
         userInfoContainer.classList.add("active");
         renderWeatherInfo(data);
+        if(response.status!==200){
+          throw new Error(response.status);
+        }
         
     }catch(err){
-        if(err === 404){
-            handleerror(err);
-        }
+        
         console.log("nodta");
-        handleerror(err);
+        handleerror();
     }
 }
 
 
-function handleerror(err){
-    if(err === 404 || err === 400){
-        loadingScreen.classList.remove("active");
-        userInfoContainer.classList.add("error");
-    }
-    
-}
+
 
 // 'https://open-weather13.p.rapidapi.com/city/fivedaysforcast/30.438/-89.1028';
+
+
+
+function handleerror(){
+    loadingScreen.classList.remove("active");
+    grantAccessContainer.classList.remove("active");
+    userInfoContainer.classList.remove("active");
+    errorDisplay.classList.add("active");
+}
