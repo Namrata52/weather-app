@@ -1,5 +1,6 @@
 // fetch all elements
 
+import config from './config.js';
 const userTab = document.querySelector("[data-userWeather]");
 const searchTab =document.querySelector("[data-searchWeather]");
 const userContainer =document.querySelector(".weather-container");
@@ -13,13 +14,15 @@ const userInfoContainer =document.querySelector(".user-infoContainer");
 let oldTab =userTab;
 oldTab.classList.add("current-tab");
 // url 'https://open-weather13.p.rapidapi.com/city/landon';
-const options = {
-	method: 'GET',
+
+const options={
+    method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '9488ca79e4msh6909d9d40409f9bp1bb498jsn522584cb9e1d',
+		'X-RapidAPI-Key': config.KEY,
 		'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
 	}
 };
+
 getFromSessionStorage();
 
 const errorDisplay =document.querySelector('[data-error]');
